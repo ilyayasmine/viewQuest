@@ -1,0 +1,43 @@
+<html>
+<head>
+<style>
+
+button1 {
+  background: lightgrey;
+  width: 25%;
+  border: 0;
+}
+
+button2 {
+  background: #003366;
+  width: 25%;
+  border: 0;
+}
+
+</style>
+<body>
+
+Name: <br><?php echo $_GET["firstname"."lastname"]; ?></br><br>
+NRIC / Passport Number: </br><br><?php echo $_GET["nric"]; ?><br>
+Contact Number: </br><br><?php echo $_GET["number"]; ?><br>
+Email Address: </br><br><?php echo $_GET["email"]; ?><br>
+Address: </br><br><?php echo $_GET["address"]; ?><br>
+
+  <div class="form-group">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="gridCheck">
+      <label class="form-check-label" for="gridCheck">
+        I have read and accept the terms an conditions of XYZ company
+      </label>
+    </div>
+  </div>
+
+  <p>
+      <button><font color="white" id = "button1"><a href="form.php"></a>BACK</font></button>
+  </p>
+   <p>
+      <button><font color="white" id = "button2">SUBMIT</font></button>
+  </p>
+
+</body>
+</html>

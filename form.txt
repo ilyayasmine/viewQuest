@@ -1,0 +1,290 @@
+<!DOCTYPE HTML>  
+<html>
+<head>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/**************************************/
+@media (min-width: 700px) {
+  .wrapper {
+    overflow: hidden;
+  }
+  .wrapper > * {
+    float: left;
+    padding: 2em 2em;
+  }
+}
+
+@media (min-width: 700px) {
+  .contacts {
+    width: 30%;
+    min-height: 620px;
+  }
+}
+
+@media (min-width: 700px) {
+  .form {
+    width: 70%;
+  }
+}
+
+select {
+  float: left;
+  width: 49%;
+}
+
+
+form p {
+  float: left;
+  width: 49%;
+}
+form p:not(:nth-child(2n)) {
+  margin-right: 2%;
+}
+form p:last-child {
+  clear: both;
+  width: 100%;
+}
+form p:nth-last-child(2) {
+  clear: both;
+  width: 100%;
+}
+
+/**************************************/
+body {
+  padding: 1rem;
+}
+
+.wrapper {
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+}
+.wrapper > * {
+  padding: 1em;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.contacts {
+}
+
+.form {
+  background: #fff;
+}
+
+form label {
+  display: block;
+}
+
+button,
+input,
+textarea, select {
+  padding: 1em;
+}
+
+button {
+  background: #003366;
+  width: 25%;
+  border: 0;
+}
+button:hover, button:focus {
+  background: gold;
+  outline: 0;
+}
+
+.contain {
+  max-width: 1170px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1em;
+}
+@media (min-width: 600px) {
+  .contain {
+    padding: 0;
+  }
+}
+
+h3,
+ul {
+  margin: 0;
+}
+
+h3 {
+  margin-bottom: 1rem;
+}
+
+input:focus,
+textarea:focus {
+  outline: 3px solid gold;
+}
+
+input,
+textarea, select {
+  width: 100%;
+  border: 1px solid #000;
+}
+
+</style>
+
+<body>
+
+<?php
+// define variables and set to empty values
+$lastnameErr = $firstnameErr = $numberErr = $emailErr = $nricErr = $cityErr = $stateErr = $countryErr = $zipcodeError = "";
+$lastname = $firstname = $number = $email = $nric = $city = $state = $country = $zipcode = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (empty($_POST["lastname"])) {
+    $lastnameErr = "Lastname is required";
+  } else {
+    $lastname = test_input($_POST["lastname"]);
+    // check if name only contains letters and whitespace
+    if (!preg_match("/^[a-zA-Z ]*$/",$lastname)) {
+      $lastnameErr = "Only letters and white space allowed"; 
+    }
+  }
+  
+
+  if (empty($_POST["firstname"])) {
+    $firstnameErr = "Firstname is required";
+  } else {
+    $firstname = test_input($_POST["firstname"]);
+    // check if name only contains letters and whitespace
+    if (!preg_match("/^[a-zA-Z ]*$/",$firstname)) {
+      $firstnameErr = "Only letters and white space allowed"; 
+    }
+  }
+
+
+ if (empty($_POST["number"])) {
+    $numberErr = "Number is required";
+  } else {
+    $number = test_input($_POST["number"]);
+    // check if name only contains numbers
+    if (!preg_match("/^[0123456789]*$/",$number)) {
+      $numberErr = "Only number allowed"; 
+    }
+  }
+  
+    if (empty($_POST["email"])) {
+    $emailErr = "Email is required";
+  } else {
+    $email = test_input($_POST["email"]);
+    // check if e-mail address is well-formed
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $emailErr = "Invalid email format"; 
+    }
+  }
+  
+   if (empty($_POST["nric"])) {
+    $nricErr = "NRIC is required";
+  } else {
+    $nric = test_input($_POST["nric"]);
+    // check if name only contains numbers
+    if (!preg_match("/^[0123456789]*$/",$nric)) {
+      $nricErr = "Only number allowed"; 
+    }
+  }
+
+  if (empty($_POST["city"])) {
+    $cityErr = "City is required";
+  } else {
+    $city = test_input($_POST["city"]);
+    // check if name only contains letters and whitespace
+    if (!preg_match("/^[a-zA-Z ]*$/",$city)) {
+      $cityErr = "Only letters and white space allowed"; 
+    }
+  }
+  
+    if (empty($_POST["country"])) {
+    $cityErr = "Country is required";
+  } 
+  
+    if (empty($_POST["zipcode"])) {
+    $zipcodeErr = "Zipcode is required";
+  } else {
+    $zipcode = test_input($_POST["zipcode"]);
+    // check if name only contains letters and whitespace
+    if (!preg_match("/^[a-zA-Z ]*$/",$zipcode)) {
+      $zipcodeErr = "Only letters and white space allowed"; 
+    }
+  }
+ }
+
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+?> 
+  
+<div class="contain">
+
+  <div class="wrapper">
+    <div class="contacts">
+      <h3>Enter Your Personal Information Below</h3>
+      <p>Please fill up this fields below correctly</p>
+
+    </div>
+
+    <div class="form">
+      <form action="insertuser.php">
+        <p>
+          <label for="lastname">Lastname</label>
+          <input type="text" name= "lastname">
+        </p>
+        <p>
+          <label for="firstname">Firstname</label>
+          <input type="text" name = "firstname">
+        </p>
+        <p>
+          <label for="number">Contact Number</label>
+          <input type="text" name ="number">
+        </p>
+        <p>
+          <label for="email">Email Address</label>
+          <input type="text" name ="email">
+        </p>
+        <div>
+        <lable for="nric">NRIC / Passport Number</label>
+        <input type="text" name ="nric">
+        </div>
+ <p>
+          <label for="city">City</label>
+          <input type="text" name ="city">
+        </p>
+        <p>
+          <label for="state">State</label>
+          <input type="text" name ="state">
+        </p>
+        
+         <p><label class ="select">
+          <label for="country">County</label>
+          <select>
+  <option value=""></option>
+  <option value="Malaysia">Malaysia</option>
+  <option value="Singapore">Singapore</option>
+  <option value="Indonesia">Indonesia</option>
+  </select></label>
+        </p>
+        
+        <p>
+          <label for="">Zipcode</label>
+          <input type="text">
+        </p>
+        
+        <p>
+        </p>
+        <p>
+          <button><font color="white"><a href="viewform.php">NEXT</font></button>
+        </p>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
